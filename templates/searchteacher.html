@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>教師查詢系統</title>
+</head>
+<body>
+    <h1>教師姓名查詢</h1>
+    
+    <form action="/read2" method="POST">
+        <label>請輸入關鍵字查詢:</label>
+        <input type="text" name="keyword" placeholder="請輸入姓名" required>
+        <button type="submit">查詢</button>
+    </form>
+
+    {% if keyword %}
+        <hr>
+        <h3>查詢結果 (關鍵字: {{ keyword }})</h3>
+        
+        {% if results %}
+            {% for teacher in results %}
+                <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                    <p><strong>{{ teacher.name }} 老師的研究是在 {{ teacher.lab }}</strong></p>
+                    
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="color: red;">查無此老師</p>
+        {% endif %}
+    {% endif %}
+
+    <br>
+    <hr>
+    <a href="/">返回首頁</a>
+</body>
+</html>

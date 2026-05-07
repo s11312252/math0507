@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>爬蟲結果</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .course-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>爬取到的課程資料</h1>
+    <hr>
+    
+    {% for course in courses %}
+    <div class="course-item">
+        <strong>課程名稱：</strong> {{ course.title }} <br>
+        <strong>超連結：</strong> <a href="{{ course.link }}" target="_blank">{{ course.link }}</a>
+    </div>
+    {% endfor %}
+
+    <br>
+    <a href="/">返回首頁</a>
+</body>
+</html>
