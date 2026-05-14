@@ -55,17 +55,29 @@ def index():
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    # build a request object
     req = request.get_json(force=True)
-    # fetch queryResult from json
-    action =  req["queryResult"]["action"]
-    #msg =  req["queryResult"]["queryText"]
-    #info = "我是設計的機器人,動作：" + action + "； 查詢內容：" + msg
-    if (action == "rateChoice"):
-        rate =  req["queryResult"]["parameters"]["rate"]
-        info = "我是陳芯霈設計的機器人您選擇的電影分級是：" + rate
+    action = req["queryResult"]["action"]
+    
+    if action == "rateChoice":
+        rate = req["queryResult"]["parameters"]["rate"]
+        
+        db = firestore.client()
+        collection_ref = db.collection("本週新片含分級")
+        docs = collection_ref.where("rate", "==", rate).get()
+        
+        res = f"為您找出的本週 {rate} 電影有：\n"
+        found = False
+        for doc in docs:
+            found = True
+            m = doc.to_dict()
+            res += f"- {m.get('title')} (片長：{m.get('showLength')} 分)\n"
+        
+        if not found:
+            res = f"抱歉，本週資料庫中沒有標記為 {rate} 的電影喔！"
+            
+        return make_response(jsonify({"fulfillmentText": res}))
 
-    return make_response(jsonify({"fulfillmentText": info}))
+    return make_response(jsonify({"fulfillmentText": "Webhook 運作正常，但未觸發特定動作。"}))
 
 
 @app.route("/rate")
