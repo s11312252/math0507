@@ -30,7 +30,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    link = "<h1>歡迎來到陳芯霈的網站</h1><hr>"
+    link = "<h1>歡迎來到陳芯霈的網站0514</h1><hr>"
     link += "<a href=/mis>課程</a><hr>"
     link += "<a href=/today>時間</a><hr>"
     link += "<a href=/me>關於我</a><hr>"
@@ -48,7 +48,7 @@ def index():
     link += "<br><a href='/road'>台中市十大肇事路口查詢</a><hr>"
     link += "<br><a href='/weather'>天氣預報查詢</a><hr>"
     link += "<br><a href='/rate'>本週新片</a><hr>"
-    link += "<br><a href='/rate'>查詢電影內容</a><hr>"
+    link += "<br><a href='/rate'>webhook</a><hr>"
 
 
     return link
@@ -58,12 +58,12 @@ def webhook():
     # build a request object
     req = request.get_json(force=True)
     # fetch queryResult from json
-    action =  req.get["queryResult"].get["action"]
-    #msg =  req.get("queryResult").get("queryText")
-    #nfo = "我是陳芯霈設計的機器人,動作：" + action + "； 查詢內容：" + msg
+    action =  req["queryResult"]["action"]
+    #msg =  req["queryResult"]["queryText"]
+    #info = "我是設計的機器人,動作：" + action + "； 查詢內容：" + msg
     if (action == "rateChoice"):
         rate =  req["queryResult"]["parameters"]["rate"]
-        info = "我是陳芯霈設計的機器人，您選擇的電影分級是：" + rate
+        info = "我是陳芯霈設計的機器人您選擇的電影分級是：" + rate
 
     return make_response(jsonify({"fulfillmentText": info}))
 
