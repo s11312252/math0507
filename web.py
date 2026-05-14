@@ -48,7 +48,6 @@ def index():
     link += "<br><a href='/road'>台中市十大肇事路口查詢</a><hr>"
     link += "<br><a href='/weather'>天氣預報查詢</a><hr>"
     link += "<br><a href='/rate'>本週新片</a><hr>"
-    link += "<br><a href='/rate'>webhook</a><hr>"
 
 
     return link
@@ -65,7 +64,7 @@ def webhook():
         collection_ref = db.collection("本週新片含分級")
         docs = collection_ref.where("rate", "==", rate).get()
         
-        res = f"為您找出的本週 {rate} 電影有：\n"
+        res = f"我是陳芯霈設計的機器人，為您找出的本週 {rate} 電影有：\n"
         found = False
         for doc in docs:
             found = True
